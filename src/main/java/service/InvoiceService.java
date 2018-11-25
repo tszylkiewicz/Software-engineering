@@ -33,10 +33,14 @@ public class InvoiceService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createInvoice(final Invoice invoice) {
-        InvoiceDao dao = new InvoiceDao();
-        Invoice createdInvoice = dao.create(invoice);
+        try {
+            InvoiceDao dao = new InvoiceDao();
+            Invoice createdInvoice = dao.create(invoice);
 
-        return Response.ok(createdInvoice).build();
+            return Response.ok(createdInvoice).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @PUT

@@ -31,10 +31,14 @@ public class VehicleService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createVehicle(final Vehicle vehicle) {
-        VehicleDao dao = new VehicleDao();
-        Vehicle createdVehicle = dao.create(vehicle);
+        try {
+            VehicleDao dao = new VehicleDao();
+            Vehicle createdVehicle = dao.create(vehicle);
 
-        return Response.ok(createdVehicle).build();
+            return Response.ok(createdVehicle).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @PUT

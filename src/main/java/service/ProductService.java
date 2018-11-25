@@ -45,10 +45,14 @@ public class ProductService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createProduct(final Product product) {
-        ProductDao dao = new ProductDao();
-        Product createdProduct = dao.create(product);
 
-        return Response.ok(createdProduct).build();
+        try {
+            ProductDao dao = new ProductDao();
+            Product createdProduct = dao.create(product);
+            return Response.ok(createdProduct).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @PUT
